@@ -1,19 +1,30 @@
-name: SonarCloud Scan
+name: SonarCloud Analysis
 
 on:
   push:
     branches:
-      - main
+      - main 
 
 jobs:
-  scan:
-    runs-on: ubuntu-latest
+  sonarqube_scan:
+    runs-on: ubuntu-latest  
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+   
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarqube-scan-action@v5.0.0
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Load environment variables from .env
+        run: |
+          set -o allexport
+          source .env
+          set +o allexport
+          
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@v5.0.0
+        with:
+          projectBaseDir: .
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  
+
+   
