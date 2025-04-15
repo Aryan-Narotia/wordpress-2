@@ -28,9 +28,9 @@ jobs:
       env:
         WPSCAN_API_TOKEN: ${{ secrets.WPSCAN_API_TOKEN }}
       run: |
-        wpscan --url http://3.7.46.140.nip.io \
-               --api-token $WPSCAN_API_TOKEN \
-               --format json \
+        wpscan --url http://3.7.46.140.nip.io 
+               --api-token $WPSCAN_API_TOKEN 
+               --format json 
                -o wpscan-results.json
 
     - name: Upload WPScan results
