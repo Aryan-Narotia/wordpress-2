@@ -26,13 +26,12 @@ def parse_wpscan_output(wpscan_output_file):
 
     plugins_data = []
 
-    if 'plugins' in data:
-        for plugin in data['plugins']:
-            name = plugin.get('name', 'Unknown Plugin')
-            vulnerabilities = plugin.get('vulnerabilities', [])
+    if 'plugins' in data and isinstance(data['plugins'], dict):
+        for plugin_name, plugin_info in data['plugins'].items():
+            vulnerabilities = plugin_info.get('vulnerabilities', [])
             if vulnerabilities:
                 severity = get_highest_severity(vulnerabilities)
-                plugins_data.append((name, severity))
+                plugins_data.append((plugin_name, severity))
     return plugins_data
 
 def save_to_txt(output_file, plugins):
@@ -50,4 +49,4 @@ if __name__ == '__main__':
     plugins = parse_wpscan_output(wpscan_output_file)
     save_to_txt(output_txt_file, plugins)
 
-    print(f"✅ TXT report generated: {output_txt_file}")
+    print(f"TXT report generated: {output_txt_file}")
