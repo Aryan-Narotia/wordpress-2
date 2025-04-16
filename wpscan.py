@@ -44,7 +44,7 @@ def save_to_txt(output_file, plugins):
             f.write("\n")
 
 if __name__ == '__main__':
-    wpscan_output_file = 'wpscan_output.json'
+    wpscan_output_file = 'wpscan-result.json'
     output_txt_file = 'plugin_vulnerabilities.txt'
 
     plugins = parse_wpscan_output(wpscan_output_file)
