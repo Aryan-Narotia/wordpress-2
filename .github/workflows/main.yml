@@ -1,4 +1,4 @@
-name: SonarCloud 
+name: SonarCloud
 
 on:
   push:
@@ -33,10 +33,18 @@ jobs:
                --ignore-main-redirect \
                --format json \
                -o wpscan-results.json
-               
 
-    - name: Upload WPScan results
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Run vulnerability report test
+      run: |
+        python3 wpscan.py
+
+    - name: Upload plugin vulnerability report
       uses: actions/upload-artifact@v4
       with:
-        name: wpscan-results
-        path: wpscan-results.json
+        name: plugin-vulnerabilities
+        path: vulnerabilities.txt
